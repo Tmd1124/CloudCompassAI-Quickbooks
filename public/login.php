@@ -32,4 +32,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <label>Username<input name="user" autocomplete="username" required autofocus></label>
 <label>Password<input name="pass" type="password" autocomplete="current-password" required></label>
 <button class="btn" type="submit">Sign in</button>
-</form></main></body></html>
+</form><p class="muted"><a href="/privacy.html">Privacy</a> &middot; <a href="/eula.html">Terms</a></p></main></body></html>

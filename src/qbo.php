@@ -70,6 +70,20 @@ final class Qbo
 
     public static function disconnect(): void
     {
+        $t = self::load();
+        if ($t && !is_demo()) {
+            $ch = curl_init("https://developer.api.intuit.com/v2/oauth2/tokens/revoke");
+            curl_setopt_array($ch, [
+                CURLOPT_POST => true,
+                CURLOPT_POSTFIELDS => json_encode(["token" => $t["refresh_token"]]),
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_TIMEOUT => 15,
+                CURLOPT_USERPWD => need("qbo.client_id") . ":" . need("qbo.client_secret"),
+                CURLOPT_HTTPHEADER => ["Accept: application/json", "Content-Type: application/json"],
+            ]);
+            curl_exec($ch);
+            curl_close($ch);
+        }
         @unlink(self::tokenFile());
     }
 

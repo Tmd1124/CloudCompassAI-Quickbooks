@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Usage: scripts/deploy.sh [--dry-run]   Uploads to the books.cloudcompassai.com FTP docroot only.
+# Usage: scripts/deploy.sh [--dry-run]   Uploads to the quickbooks.cloudcompassai.com FTP docroot only.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 set -a; . ./.env.deploy; set +a

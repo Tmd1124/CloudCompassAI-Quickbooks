@@ -55,3 +55,8 @@ body.login{display:grid;place-items:center;min-height:100vh;padding:16px}
 .card form{display:flex;flex-direction:column;gap:14px;margin-top:1.25rem}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 @media (max-width:600px){h1{font-size:1.5rem}.right{margin-left:0;width:100%;justify-content:space-between}}
+.legal{max-width:760px;padding-bottom:3rem}
+.legal h2{font-family:"Iowan Old Style",Georgia,serif;font-weight:500;font-size:1.25rem;margin:2rem 0 .5rem}
+.legal p,.legal li{color:var(--ink)}
+.legal ul{padding-left:1.25rem}
+.legal li{margin:.35rem 0}

@@ -17,7 +17,7 @@ function page_start(string $title, string $active = ''): void
 
 function page_end(): void
 {
-    echo '</main><footer class="wrap foot">Read-only view of your QuickBooks Online data. Transactions arrive through the QuickBooks Chase bank feed.</footer></body></html>';
+    echo '</main><footer class="wrap foot">Read-only view of your QuickBooks Online data. Transactions arrive through the QuickBooks Chase bank feed. &middot; <a href="/privacy.html">Privacy</a> &middot; <a href="/eula.html">Terms</a></footer></body></html>';
 }
 
 function show_qbo_error(): void
