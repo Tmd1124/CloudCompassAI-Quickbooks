@@ -1,0 +1,7 @@
+config/config.php
+storage/*
+!storage/.htaccess
+.env*
+.playwright-mcp/
+*.png
+config/config.server.php

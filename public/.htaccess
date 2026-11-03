@@ -1,0 +1,13 @@
+Options -Indexes
+DirectoryIndex index.php
+
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>
+
+Header always set Strict-Transport-Security "max-age=31536000"
