@@ -1,5 +1,7 @@
 # CloudCompass Books
 
+> **Retired 2026-11-03.** This standalone app moved into the CloudCompassAI website admin (repo `CloudCompassAI-WebSite`, tab Admin > QuickBooks). quickbooks.cloudcompassai.com now redirects there (`scripts/retired.htaccess`); the legacy files and cron still sit on that host and can be deleted. Its `ccqb_*` tables are shared with the new tab: the unused `ccqb_users`, `ccqb_remember` and `ccqb_resets` can be dropped. Do not use Disconnect or Environment here any more.
+
 QuickBooks Online viewer for quickbooks.cloudcompassai.com (HostGator, PHP 8 + MySQL). Transactions arrive in QuickBooks via its native Chase bank feed; this app syncs them into MySQL (`ccqb_*` tables in the website DB), flags possible duplicates, and shows live Profit & Loss and Balance Sheet. Read-only toward QuickBooks. Spec: `docs/superpowers/specs/2026-11-03-quickbooks-reporting-app.md`.
 
 ## Pick up here

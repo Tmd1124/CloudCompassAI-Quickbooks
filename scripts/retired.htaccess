@@ -1,0 +1,10 @@
+# quickbooks.cloudcompassai.com is retired: the app now lives in the CloudCompassAI admin (Admin > QuickBooks).
+# Upload as the docroot .htaccess (replaces the app's own). Keeps nothing reachable.
+Options -Indexes
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteRule ^privacy\.html$ https://cloudcompassai.com/quickbooks-privacy.html [R=301,L]
+RewriteRule ^eula\.html$ https://cloudcompassai.com/quickbooks-eula.html [R=301,L]
+RewriteRule ^(?!\.well-known/) https://cloudcompassai.com/admin/books.php [R=302,L]
