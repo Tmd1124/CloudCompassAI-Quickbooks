@@ -56,22 +56,31 @@ function is_https(): bool
         || ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https';
 }
 
-session_name('ccqb');
-session_set_cookie_params([
-    'httponly' => true,
-    'samesite' => 'Lax',
-    'secure' => is_https(),
-    'path' => '/',
-]);
-session_start();
-
-header('X-Frame-Options: DENY');
-header('X-Content-Type-Options: nosniff');
-header('Referrer-Policy: same-origin');
-header("Content-Security-Policy: default-src 'self'; style-src 'self'; script-src 'self'; frame-ancestors 'none'");
-header('Cache-Control: no-store');
-
+require __DIR__ . '/db.php';
+require __DIR__ . '/mail.php';
 require __DIR__ . '/auth.php';
 require __DIR__ . '/qbo.php';
 require __DIR__ . '/report.php';
+require __DIR__ . '/sync.php';
 require __DIR__ . '/layout.php';
+
+if (PHP_SAPI !== 'cli') {
+    session_name('ccqb');
+    session_set_cookie_params([
+        'httponly' => true,
+        'samesite' => 'Lax',
+        'secure' => is_https(),
+        'path' => '/',
+    ]);
+    session_start();
+
+    header('X-Frame-Options: DENY');
+    header('X-Content-Type-Options: nosniff');
+    header('Referrer-Policy: same-origin');
+    header("Content-Security-Policy: default-src 'self'; style-src 'self'; script-src 'self'; frame-ancestors 'none'");
+    header('Cache-Control: no-store');
+
+    if (!logged_in() && isset($_COOKIE[REMEMBER_COOKIE])) {
+        remember_try();
+    }
+}

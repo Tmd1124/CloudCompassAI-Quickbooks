@@ -60,3 +60,13 @@ body.login{display:grid;place-items:center;min-height:100vh;padding:16px}
 .legal p,.legal li{color:var(--ink)}
 .legal ul{padding-left:1.25rem}
 .legal li{margin:.35rem 0}
+.pwfield{position:relative;display:flex}
+.pwfield input{flex:1;padding-right:46px}
+.pwfield .eye{position:absolute;right:2px;top:2px;bottom:2px;width:42px;border:0;background:none;font-size:1.15rem;cursor:pointer;border-radius:8px}
+.pwfield .eye:hover{background:var(--bg)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.row label.check{padding-bottom:0}
+.notice.ok{background:var(--okbg)}
+.small{font-size:.8rem}
+.syncbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:1rem}
+.syncbar form{margin:0}

@@ -45,9 +45,9 @@ function statement_lines(array $report): array
 function transaction_list(array $report): array
 {
     $cols = [];
+    $map = ['date' => 'date', 'transaction type' => 'type', 'num' => 'num', 'name' => 'name', 'memo/description' => 'memo', 'account' => 'account', 'split' => 'split', 'amount' => 'amount'];
     foreach (($report['Columns']['Column'] ?? []) as $i => $c) {
         $t = strtolower($c['ColTitle'] ?? '');
-        $map = ['date' => 'date', 'transaction type' => 'type', 'num' => 'num', 'name' => 'name', 'memo/description' => 'memo', 'account' => 'account', 'split' => 'split', 'amount' => 'amount'];
         if (isset($map[$t])) {
             $cols[$map[$t]] = $i;
         }
@@ -61,17 +61,23 @@ function transaction_list(array $report): array
         foreach (['date', 'type', 'num', 'name', 'memo', 'account', 'split', 'amount'] as $k) {
             $row[$k] = isset($cols[$k]) ? (string) ($r['ColData'][$cols[$k]]['value'] ?? '') : '';
         }
+        $row['qbo_id'] = isset($cols['date']) ? (string) ($r['ColData'][$cols['date']]['id'] ?? '') : '';
         $rows[] = $row;
     }
+    return $rows;
+}
+
+function mark_dups(array $rows): array
+{
     $seen = [];
     foreach ($rows as $row) {
-        $seen[dup_key($row)] = ($seen[dup_key($row)] ?? 0) + 1;
+        $k = dup_key($row);
+        $seen[$k] = ($seen[$k] ?? 0) + 1;
     }
     foreach ($rows as &$row) {
         $row['dup'] = $seen[dup_key($row)] > 1;
     }
     unset($row);
-    usort($rows, fn($a, $b) => strcmp($b['date'], $a['date']));
     return $rows;
 }
 

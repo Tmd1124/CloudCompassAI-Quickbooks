@@ -14,28 +14,30 @@
 <ul>
 <li><strong>QuickBooks Online data.</strong> After you approve access at Intuit, the App reads accounting reports from your QuickBooks company through the Intuit QuickBooks Online Accounting API: transaction lists, Profit and Loss, and Balance Sheet. These reports may include payee names, memos, account names and amounts.</li>
 <li><strong>Access credentials.</strong> To keep the connection working, the App stores the Intuit OAuth access token, refresh token and company (realm) ID. They are stored encrypted (AES-256-GCM) on our server, outside public web access.</li>
-<li><strong>Sign-in and security data.</strong> A session cookie keeps you signed in. We keep a short-lived record of failed sign-in attempts, stored as a one-way hash of the IP address, to block password guessing.</li>
+<li><strong>Stored transactions.</strong> The App copies your QuickBooks transaction list (date, type, number, payee name, memo, account, category and amount) into a MySQL database on our hosting account so it can be searched and shown without calling QuickBooks each time, and so duplicates can be flagged. Profit and Loss and Balance Sheet reports are not stored; they are fetched from QuickBooks when you open the page.</li>
+<li><strong>Account data.</strong> Your username, email address and a bcrypt hash of your password are stored in the same database. We also store one-way hashes of password-reset links (valid for 1 hour) and of "Remember me" tokens (valid for 30 days).</li>
+<li><strong>Sign-in and security data.</strong> A session cookie keeps you signed in, and the optional "Remember me" cookie keeps you signed in on that browser for up to 30 days. We keep a short-lived record of failed sign-in attempts, stored as a one-way hash of the IP address, to block password guessing.</li>
+<li><strong>Email.</strong> If you use "Forgot password", the App sends one email containing a reset link to the address on file. We send no other email.</li>
 </ul>
 
 <h2>What we do not do</h2>
 <ul>
-<li>We do not copy QuickBooks report data into our own database. Reports are fetched from QuickBooks when you open a page and are shown to you, not stored.</li>
 <li>The App is read-only. It never creates, edits or deletes anything in QuickBooks.</li>
 <li>We do not sell, rent or share your data, and we do not use it for advertising or analytics. The App has no advertising or third-party analytics scripts.</li>
 <li>We do not access, store or see your bank login credentials. Bank connections are made inside QuickBooks Online.</li>
 </ul>
 
 <h2>How information is used</h2>
-<p>Only to display your own accounting reports to you and to keep the QuickBooks connection and sign-in secure.</p>
+<p>Only to display your own transactions and accounting reports to you, to flag possible duplicates, to keep the QuickBooks connection current, and to keep sign-in secure.</p>
 
 <h2>Service providers</h2>
 <p>The App is hosted on HostGator shared hosting in the United States. QuickBooks data is provided by Intuit Inc. and is governed by Intuit's own <a href="https://www.intuit.com/privacy/">Privacy Statement</a>. We do not share your data with any other third party.</p>
 
 <h2>Security</h2>
-<p>All traffic uses HTTPS. Passwords are stored only as bcrypt hashes. QuickBooks tokens are encrypted at rest. Configuration and token files are blocked from web access. No system is perfectly secure, but we limit what is collected so there is little to expose.</p>
+<p>All traffic uses HTTPS. Passwords are stored only as bcrypt hashes. QuickBooks tokens are encrypted at rest. Configuration and token files are blocked from web access, and database credentials are kept in a protected configuration file. The stored transactions are held in a database on the same hosting account and are not encrypted at rest beyond what the host provides. No system is perfectly secure, but we limit what is collected so there is little to expose.</p>
 
 <h2>Retention and disconnecting</h2>
-<p>Stored tokens are kept only while the connection is active. You can disconnect at any time using <em>Disconnect</em> on the QuickBooks connection page, which deletes the stored tokens, or by revoking the App's access from your Intuit account (QuickBooks Online &rarr; Apps / Connected apps). Failed sign-in records expire after 15 minutes.</p>
+<p>Stored tokens and transactions are kept while the connection is active. Using <em>Disconnect</em> on the QuickBooks connection page revokes the App's access at Intuit and deletes the stored tokens and all stored transactions. If you instead revoke access from your Intuit account (QuickBooks Online &rarr; Apps / Connected apps), the App can no longer read new data, but already-stored transactions remain until you use Disconnect or ask us to delete them. Reset links expire after 1 hour, "Remember me" tokens after 30 days, and failed sign-in records after 15 minutes.</p>
 
 <h2>Your choices and requests</h2>
 <p>To ask about, correct or delete anything we hold, contact us at the address below.</p>
