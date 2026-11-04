@@ -80,3 +80,8 @@ body.login{display:grid;place-items:center;min-height:100vh;padding:16px}
 .envcard.current{box-shadow:inset 0 0 0 2px var(--accent)}
 .envcard h2{font-family:"Iowan Old Style",Georgia,serif;font-weight:500;font-size:1.25rem;margin:0 0 .5rem}
 .envcard form{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.envtag{display:inline-block;font:600 .68rem/1 system-ui,sans-serif;text-transform:uppercase;letter-spacing:.06em;padding:4px 9px;border-radius:999px;vertical-align:middle;margin-left:8px;white-space:nowrap}
+td .envtag{margin-left:0}
+.envtag.sandbox{background:var(--warnbg)}
+.envtag.production{background:var(--okbg)}
+.envtag.demo{background:var(--demobg)}

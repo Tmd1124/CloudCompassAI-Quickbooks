@@ -63,7 +63,7 @@ function sync_transactions(string $from, string $to, bool $dry = false, ?string 
 
 function stored_transactions(string $from, string $to): array
 {
-    $st = Db::pdo()->prepare('SELECT qbo_id, txn_date AS date, txn_type AS type, doc_num AS num, name, memo, account, split, amount FROM ccqb_transactions WHERE env = ? AND removed_at IS NULL AND txn_date BETWEEN ? AND ? ORDER BY txn_date DESC, id DESC');
+    $st = Db::pdo()->prepare('SELECT qbo_id, env, txn_date AS date, txn_type AS type, doc_num AS num, name, memo, account, split, amount FROM ccqb_transactions WHERE env = ? AND removed_at IS NULL AND txn_date BETWEEN ? AND ? ORDER BY txn_date DESC, id DESC');
     $st->execute([Env::active(), $from, $to]);
     return mark_dups($st->fetchAll());
 }

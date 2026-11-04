@@ -5,10 +5,11 @@ require_login();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     csrf_check();
+    $envName = Env::active();
     try {
         [$sf, $st] = sync_default_range();
         $s = sync_transactions($sf, $st);
-        $_SESSION['flash'] = ['ok', "Synced {$s['seen']} transactions: {$s['inserted']} new, {$s['updated']} unchanged, {$s['removed']} removed in QuickBooks."];
+        $_SESSION['flash'] = ['ok', "Synced {$s["seen"]} {$envName} transactions: {$s['inserted']} new, {$s['updated']} unchanged, {$s['removed']} removed in QuickBooks."];
     } catch (QboException $e) {
         $_SESSION['flash'] = ['err', 'Sync failed: ' . $e->getMessage()];
         $_SESSION['flash_connect'] = $e->needsConnect;
@@ -47,7 +48,7 @@ $view = array_filter($rows, function ($r) use ($acct, $q, $dupOnly) {
 
 page_start('Transactions', 'transactions');
 ?>
-<h1>Transactions</h1>
+<h1>Transactions <?= env_badge() ?></h1>
 <?php if ($flash): ?><div class="notice <?= $flash[0] === 'ok' ? 'ok' : 'err' ?>" role="status"><?= h($flash[1]) ?><?= $flashConnect ? ' <a href="/connect.php">Connect QuickBooks</a>' : '' ?></div><?php endif; ?>
 <div class="syncbar">
   <span class="muted"><?= $last ? 'Last synced ' . h($last['finished_at']) . ' UTC' : 'Not synced yet' ?></span>
@@ -65,17 +66,17 @@ page_start('Transactions', 'transactions');
 </form>
 <p class="muted"><?= count($view) ?> of <?= count($rows) ?> stored transactions<?php if ($dupCount): ?> · <strong class="dupnote"><?= $dupCount ?> flagged as possible duplicates</strong> (same date, amount, name, account and type)<?php endif; ?></p>
 <div class="tablewrap"><table>
-  <thead><tr><th>Date</th><th>Type</th><th>Name</th><th>Memo</th><th>Account</th><th>Category / Split</th><th class="num">Amount</th></tr></thead>
+  <thead><tr><th>Env</th><th>Date</th><th>Type</th><th>Name</th><th>Memo</th><th>Account</th><th>Category / Split</th><th class="num">Amount</th></tr></thead>
   <tbody>
   <?php foreach ($view as $r): ?>
     <tr<?= $r['dup'] ? ' class="dup"' : '' ?>>
-      <td><?= h($r['date']) ?></td><td><?= h($r['type']) ?></td>
+      <td><?= env_badge($r["env"]) ?></td><td><?= h($r["date"]) ?></td><td><?= h($r["type"]) ?></td>
       <td><?= h($r['name']) ?><?= $r['dup'] ? ' <span class="tag">Possible duplicate</span>' : '' ?></td>
       <td><?= h($r['memo']) ?></td><td><?= h($r['account']) ?></td><td><?= h($r['split']) ?></td>
       <td class="num <?= (float) $r['amount'] < 0 ? 'neg' : '' ?>"><?= h(money($r['amount'])) ?></td>
     </tr>
   <?php endforeach; ?>
-  <?php if (!$view): ?><tr><td colspan="7" class="muted"><?= $last ? 'No transactions match.' : 'Nothing stored yet. Use Sync now to load transactions from QuickBooks.' ?></td></tr><?php endif; ?>
+  <?php if (!$view): ?><tr><td colspan="8" class="muted"><?= $last ? 'No transactions match.' : 'Nothing stored yet. Use Sync now to load transactions from QuickBooks.' ?></td></tr><?php endif; ?>
   </tbody>
 </table></div>
 <?php page_end();

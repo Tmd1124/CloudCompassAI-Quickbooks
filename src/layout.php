@@ -43,3 +43,12 @@ function show_qbo_error(): void
     }
     echo '</div>';
 }
+
+function env_badge(?string $env = null): string
+{
+    if (is_demo()) {
+        return '<span class="envtag demo">Demo</span>';
+    }
+    $env ??= Env::active();
+    return '<span class="envtag ' . h($env) . '">' . ($env === 'production' ? 'Production' : 'Sandbox') . '</span>';
+}

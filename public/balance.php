@@ -10,7 +10,7 @@ $lines = $rep ? statement_lines($rep) : [];
 
 page_start('Balance Sheet', 'balance');
 ?>
-<h1>Balance Sheet</h1>
+<h1>Balance Sheet <?= env_badge() ?></h1>
 <form class="filters" method="get">
   <label>As of<input type="date" name="to" value="<?= h($to) ?>"></label>
   <button class="btn" type="submit">Apply</button>

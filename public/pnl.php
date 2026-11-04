@@ -12,7 +12,7 @@ $lines = $rep ? statement_lines($rep) : [];
 
 page_start('Profit & Loss', 'pnl');
 ?>
-<h1>Profit &amp; Loss</h1>
+<h1>Profit &amp; Loss <?= env_badge() ?></h1>
 <form class="filters" method="get">
   <label>From<input type="date" name="from" value="<?= h($from) ?>"></label>
   <label>To<input type="date" name="to" value="<?= h($to) ?>"></label>
