@@ -59,6 +59,7 @@ function is_https(): bool
 require __DIR__ . '/db.php';
 require __DIR__ . '/mail.php';
 require __DIR__ . '/auth.php';
+require __DIR__ . '/env.php';
 require __DIR__ . '/qbo.php';
 require __DIR__ . '/report.php';
 require __DIR__ . '/sync.php';

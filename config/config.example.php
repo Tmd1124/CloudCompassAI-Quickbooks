@@ -1,5 +1,5 @@
 <?php
-// Copy to config.php (gitignored). Any key can be overridden by an env var, e.g. CCQB_QBO_CLIENT_ID.
+// Copy to config.php (gitignored). Any key can be overridden by an env var, e.g. CCQB_DB_PASSWORD.
 return [
     'demo' => false,
     'admin_user' => 'REPLACE_ME',
@@ -16,10 +16,18 @@ return [
         'password' => 'REPLACE_ME',
     ],
     'mail' => ['mode' => 'mail', 'from' => 'no-reply@books.example.com'],  // mode 'log' writes to storage/outbox.log
+    // Intuit Development keys go under 'sandbox'; Production keys under 'production'.
+    // Production stays unused (the app defaults to sandbox) while its keys are REPLACE_ME.
     'qbo' => [
-        'environment' => 'production',       // or 'sandbox'
-        'client_id' => 'REPLACE_ME',
-        'client_secret' => 'REPLACE_ME',
-        'redirect_uri' => 'https://books.example.com/callback.php',
+        'sandbox' => [
+            'client_id' => 'REPLACE_ME',
+            'client_secret' => 'REPLACE_ME',
+            'redirect_uri' => 'https://books.example.com/callback.php',
+        ],
+        'production' => [
+            'client_id' => 'REPLACE_ME',
+            'client_secret' => 'REPLACE_ME',
+            'redirect_uri' => 'https://books.example.com/callback.php',
+        ],
     ],
 ];

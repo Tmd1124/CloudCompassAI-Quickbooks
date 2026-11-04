@@ -5,16 +5,17 @@ require_login();
 
 $state = (string) ($_GET['state'] ?? '');
 $expected = (string) ($_SESSION['oauth_state'] ?? '');
-unset($_SESSION['oauth_state']);
+$env = (string) ($_SESSION['oauth_env'] ?? '');
+unset($_SESSION['oauth_state'], $_SESSION['oauth_env']);
 $code = (string) ($_GET['code'] ?? '');
 $realm = (string) ($_GET['realmId'] ?? '');
 
-if ($expected === '' || !hash_equals($expected, $state) || $code === '' || !preg_match('/^\d{5,25}$/', $realm)) {
+if ($expected === '' || !in_array($env, ['sandbox', 'production'], true) || !hash_equals($expected, $state) || $code === '' || !preg_match('/^\d{5,25}$/', $realm)) {
     http_response_code(400);
     exit('Connection was not completed. Go back and try Connect QuickBooks again.');
 }
 try {
-    Qbo::exchange($code, $realm);
+    Qbo::exchange($env, $code, $realm);
 } catch (QboException $e) {
     http_response_code(502);
     exit(h($e->getMessage()));

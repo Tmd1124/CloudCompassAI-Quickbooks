@@ -9,3 +9,10 @@ QuickBooks Online viewer for quickbooks.cloudcompassai.com (HostGator, PHP 8 + M
 - Decisions (Travis): QuickBooks-native feed, no Plaid; HostGator not Vercel; use website MySQL DB with `ccqb_` prefix; reset mail via PHP mail() to the account email only.
 - Open: Intuit production keys/questionnaire; optional cPanel cron `php /home2/aycjztte/public_html/quickbooks/cron/sync.php`; confirm reset email actually arrives; rotate pasted secrets (Intuit client secret, FTP/DB password; the DB and FTP password are the same); take a DB backup.
 - Disconnect revokes at Intuit and deletes stored transactions.
+
+## Environments (sandbox / production)
+- Keys live in `qbo.sandbox` and `qbo.production` in config. Production stays unused while its keys are `REPLACE_ME`; the app then defaults to Sandbox with a banner "Production keys are not ready yet".
+- Once production keys exist the app defaults to Production. Switch from the header chip or `/environment.php` (production needs a confirm tick).
+- Each environment has its own QuickBooks connection (`storage/qbo_tokens.<env>.enc`) and its own rows (`env` column). Disconnect and purge only touch the active environment.
+- Cron (`cron/sync.php`) syncs production only, when ready and connected; otherwise it logs "skipped". Run `--env=sandbox` by hand if needed.
+- To go live: add the redirect URI under Intuit's Production settings, put the production Client ID/Secret in `config/config.server.php`, redeploy, switch to Production, click Connect QuickBooks.
